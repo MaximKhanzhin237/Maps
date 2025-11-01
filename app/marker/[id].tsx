@@ -79,9 +79,7 @@ export default function MarkerDetails(){
       <Text>Данные маркера {id}</Text>
       <Text>Широта: {marker.latitude}</Text>
       <Text>Долгота: {marker.longitude}</Text>
-      <View style = {styles.buttonContainer}>
       <Button title="Выберите фото"  onPress={addImage} disabled={!status?.granted} />
-      </View>
 
       <ImageList images={marker.images} onRemoveImage={removeImage} />
     </View>
@@ -110,7 +108,4 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: 'cover',
   },
-  buttonContainer: {
-    backgroundColor: "#25292e"
-  }
 });

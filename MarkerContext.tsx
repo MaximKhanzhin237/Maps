@@ -14,7 +14,7 @@ interface MarkerProviderProps {
   children: ReactNode;
 }
 
-export const MarkerProvider: React.FC<MarkerProviderProps> = ({ children }) => {
+export default function MarkerProvider({ children }: MarkerProviderProps) {
   const [markers, setMarkers] = useState<MarkerData[]>([]);
 
   const getMarkerById = (id: string): MarkerData | undefined => {
