@@ -23,7 +23,7 @@ export default function ImageList({ images, onRemoveImage }: ImageListProps) {
       data={images.map((image) => image.uri)}
       renderItem={renderItem}
       keyExtractor={(item) => item}
-      horizontal={true}
+      style = {{display: 'flex', flexWrap: 'wrap'}}
     />
   );
 };

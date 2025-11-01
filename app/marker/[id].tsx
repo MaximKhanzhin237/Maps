@@ -25,7 +25,7 @@ export default function MarkerDetails(){
         }
     })();
 
-  }, [id, getMarkerById, requestPermission]);
+  }, [id]);
 
   const addImage = async () => {
     if (!status?.granted) {
