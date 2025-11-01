@@ -12,9 +12,7 @@ export default function ImageList({ images, onRemoveImage }: ImageListProps) {
   const renderItem = ({ item }: { item: string }) => (
     <View style={styles.imageContainer}>
       <Image source={{ uri: item }} style={styles.image} />
-      <View style={styles.buttonContainer}>
       <Button title="Удалить" onPress={() => onRemoveImage(item)} />
-      </View>
     </View>
   );
 
@@ -37,9 +35,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     resizeMode: 'cover',
-  },
-  buttonContainer: {
-    backgroundColor:  "#25292e"
   }
 });
 
