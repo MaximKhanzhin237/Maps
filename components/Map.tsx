@@ -30,8 +30,7 @@ export default function Map({ markers, setMarkers }: MapProps) {
     router.push(`/marker/${markerId}`);
   };
 
-  let initialRegion = null;
-    initialRegion = {
+  const initialRegion = {
       latitude: 58.0105,
       longitude: 56.2502,
       latitudeDelta: 0.0922,
