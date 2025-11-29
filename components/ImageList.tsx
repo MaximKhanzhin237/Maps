@@ -1,26 +1,26 @@
 import React from 'react';
 import { Button, FlatList, Image, StyleSheet, View } from 'react-native';
-import { ImageData } from '../types';
+import { MarkerImage } from '../types';
 
 
 interface ImageListProps {
-  images: ImageData[];
-  onRemoveImage: (uri: string) => void;
+  images: MarkerImage[] | undefined;
+  onRemoveImage: (id: number) => void;
 }
 
 export default function ImageList({ images, onRemoveImage }: ImageListProps) {
-  const renderItem = ({ item }: { item: string }) => (
+  const renderItem = ({ item }: { item: MarkerImage }) => (
     <View style={styles.imageContainer}>
-      <Image source={{ uri: item }} style={styles.image} />
-      <Button title="Удалить" onPress={() => onRemoveImage(item)} />
+      <Image source={{ uri: item.uri }} style={styles.image} />
+      <Button title="Удалить" onPress={() => onRemoveImage(item.id)} />
     </View>
   );
 
   return (
     <FlatList
-      data={images.map((image) => image.uri)}
+      data={images}
       renderItem={renderItem}
-      keyExtractor={(item) => item}
+      keyExtractor={(item) => item.id.toString()}
       numColumns={2}
     />
   );

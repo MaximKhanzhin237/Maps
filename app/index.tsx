@@ -1,14 +1,21 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Map from '../components/Map';
-import { useMarkers } from '../MarkerContext';
-
+import { useDatabase } from './contexts/DatabaseContext';
 export default function Index() {
-    const { markers, setMarkers } = useMarkers();
+  const db = useDatabase();
+
+  if (!db || db.isLoading) {
+    return <Text>Загрузка...</Text>;
+  }
+
+  if (db.error) {
+    return <Text>Ошибка: {db.error.message}</Text>;
+  }
 
     return (
         <View style={styles.container}>
-            <Map markers={markers} setMarkers={setMarkers} />
+            <Map/>
         </View>
     );
 }

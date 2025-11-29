@@ -1,32 +1,30 @@
 import { useRouter } from 'expo-router';
-import { Guid } from "guid-typescript";
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { MarkerData } from '../types';
-
+import { useDatabase } from '../app/contexts/DatabaseContext';
 const { width, height } = Dimensions.get('window');
 
-interface MapProps {
-  markers: MarkerData[];
-  setMarkers: React.Dispatch<React.SetStateAction<MarkerData[]>>;
-}
 
-export default function Map({ markers, setMarkers }: MapProps) {
+export default function Map() {
   const router = useRouter();
+  const db = useDatabase();
 
-  const handleLongPress = (event: any) => {
+   if (!db || db.isLoading) {
+      return <Text>Загрузка...</Text>;
+    }
+  
+    if (db.error) {
+      return <Text>Ошибка: {db.error.message}</Text>;
+    }
+
+  const handleLongPress = async (event: any) => {
     const { coordinate } = event.nativeEvent;
-    const newMarker: MarkerData = {
-      id: String(Guid.create()),
-      latitude: coordinate.latitude,
-      longitude: coordinate.longitude,
-      images: [],
-    };
-    setMarkers([...markers, newMarker]);
+      await db.addMarker(coordinate.latitude, coordinate.longitude); // пример координат
+      await db.loadMarkers();
   };
 
-  const handleMarkerPress = (markerId: string) => {
+  const handleMarkerPress = (markerId: number) => {
     router.push(`/marker/${markerId}`);
   };
 
@@ -46,7 +44,7 @@ export default function Map({ markers, setMarkers }: MapProps) {
           initialRegion={initialRegion}
           onLongPress={handleLongPress}
         >
-          {markers.map((marker) => (
+          {db.markers.map((marker) => (
             <Marker
               key={marker.id}
               coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
