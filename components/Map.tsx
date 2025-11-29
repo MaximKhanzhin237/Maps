@@ -20,7 +20,7 @@ export default function Map() {
 
   const handleLongPress = async (event: any) => {
     const { coordinate } = event.nativeEvent;
-      await db.addMarker(coordinate.latitude, coordinate.longitude); // пример координат
+      await db.addMarker(coordinate.latitude, coordinate.longitude); 
       await db.loadMarkers();
   };
 
